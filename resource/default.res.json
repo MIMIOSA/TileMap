@@ -1,0 +1,105 @@
+{
+	"resources": [
+		{
+			"name": "BG2_png",
+			"type": "image",
+			"url": "assets/BG2.png"
+		},
+		{
+			"name": "10000_png",
+			"type": "image",
+			"url": "assets/待机/10000.png"
+		},
+		{
+			"name": "10001_png",
+			"type": "image",
+			"url": "assets/待机/10001.png"
+		},
+		{
+			"name": "10002_png",
+			"type": "image",
+			"url": "assets/待机/10002.png"
+		},
+		{
+			"name": "10003_png",
+			"type": "image",
+			"url": "assets/待机/10003.png"
+		},
+		{
+			"name": "10004_png",
+			"type": "image",
+			"url": "assets/待机/10004.png"
+		},
+		{
+			"name": "10005_png",
+			"type": "image",
+			"url": "assets/待机/10005.png"
+		},
+		{
+			"name": "10006_png",
+			"type": "image",
+			"url": "assets/待机/10006.png"
+		},
+		{
+			"name": "10007_png",
+			"type": "image",
+			"url": "assets/待机/10007.png"
+		},
+		{
+			"name": "100002_png",
+			"type": "image",
+			"url": "assets/跑步/10000.png"
+		},
+		{
+			"name": "100012_png",
+			"type": "image",
+			"url": "assets/跑步/10001.png"
+		},
+		{
+			"name": "100022_png",
+			"type": "image",
+			"url": "assets/跑步/10002.png"
+		},
+		{
+			"name": "100032_png",
+			"type": "image",
+			"url": "assets/跑步/10003.png"
+		},
+		{
+			"name": "100042_png",
+			"type": "image",
+			"url": "assets/跑步/10004.png"
+		},
+		{
+			"name": "100052_png",
+			"type": "image",
+			"url": "assets/跑步/10005.png"
+		},
+		{
+			"name": "100062_png",
+			"type": "image",
+			"url": "assets/跑步/10006.png"
+		},
+		{
+			"name": "100072_png",
+			"type": "image",
+			"url": "assets/跑步/10007.png"
+		},
+		{
+			"name": "grass_jpg",
+			"type": "image",
+			"url": "assets/grass.jpg"
+		},
+		{
+			"name": "tree_jpg",
+			"type": "image",
+			"url": "assets/tree.jpg"
+		}
+	],
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "BG2_png,10000_png,10001_png,10002_png,10003_png,10004_png,10005_png,10006_png,10007_png,100002_png,100012_png,100022_png,100032_png,100042_png,100052_png,100062_png,100072_png,grass_jpg,tree_jpg"
+		}
+	]
+}
