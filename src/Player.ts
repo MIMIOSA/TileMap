@@ -1,12 +1,13 @@
 class Role extends egret.DisplayObjectContainer {
 
-    public MyPhoto: egret.Bitmap;
-    private MySta: StaMac = new StaMac;
-    public MoveSpeed: number = 20;
-    public ChaTime: number = 150;
-    public Modle: number = 0;
-    public IdleAni: Array<egret.Texture> = new Array<egret.Texture>();
-    public MoveAni: Array<egret.Texture> = new Array<egret.Texture>();
+    public nowDoing=0;
+    public MyPhoto:egret.Bitmap;
+    private MySta:StaMac=new StaMac;
+    public MoveSpeed:number=20;
+    public ChaTime:number=150;
+    public Modle:number=0;
+    public IdleAni:Array<egret.Texture>=new Array<egret.Texture>();
+    public MoveAni:Array<egret.Texture>=new Array<egret.Texture>();
 
     public constructor() {
         super();
@@ -57,8 +58,8 @@ class Role extends egret.DisplayObjectContainer {
         var count = 0;
         var Bit = this.MyPhoto;
         var M = this.Modle;
-        console.log("M:" + M);
         var timer: egret.Timer = new egret.Timer(125, 0);
+
         timer.addEventListener(egret.TimerEvent.TIMER, Play, this);
         timer.start();
 
@@ -68,7 +69,9 @@ class Role extends egret.DisplayObjectContainer {
                 count++;
             }
             else { count = 0; }
-            if (this.Modle != M) { console.log("tM:" + M + " nowM:" + this.Modle); timer.stop(); }
+            if (this.Modle != M) { 
+                timer.stop(); 
+            }
         }
 
     }

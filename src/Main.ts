@@ -35,6 +35,7 @@ class Main extends egret.DisplayObjectContainer {
      */
     private loadingView: LoadingUI;
     private Player: Role;
+    private BigMap:DaMap=new DaMap();
 
     public constructor() {
         super();
@@ -126,85 +127,69 @@ class Main extends egret.DisplayObjectContainer {
         sky.height = stageH;
 
 
-
-        this.Player = new Role();
+        this.BigMap=new DaMap();
+        this.Player=new Role();
+        this.addChild(this.BigMap);
+        this.dayin(this.BigMap);
+        
+        
         this.addChild(this.Player);
-
-        this.Player.x = this.Player.y = 300;
-
+        this.Player.x= this.Player.y=300;
         this.Player.Idle();
-
-
-        this.touchEnabled = true;
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.Moveba, this);
+        this.touchEnabled=true;
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.Moveba,this);
 
     }
 
-    private Moveba(evt: egret.TouchEvent): void {
-        this.Player.Move(evt.stageX, evt.stageY);
+    private ZuobiaoZhuanHua(x:number):number{
+        var k=0;
+        k=Math.floor(x/this.BigMap.KuaiSize);
+        return k;
     }
 
+    private Moveba(evt:egret.TouchEvent):void {   
+         var As=new Astar(this.BigMap,this.Player);
+         As.jisuan(this.ZuobiaoZhuanHua(evt.stageX),this.ZuobiaoZhuanHua(evt.stageY));
+         this.Player.Move(As.Ps);  
+      //   console.log(evt.stageX+" "+evt.stageY);
+       
+    }
+    private dayin(bm:DaMap):void {   
+    var x="";
+    var i=0,j=0,k=0;
+    for(;j<bm.H;j++){
+        x="";
+        for(i=0;i<bm.W;i++) {
+            if(bm.MapKs[k].canW==true)
+                x=x+"口";
+                else { x=x+"国";}
+            k++;
+        }
+         console.log(x);
+     }
 
+}
 
-
-
-
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
-
-    private createBitmapByName(name: string): egret.Bitmap {
+ private createBitmapByName(name:string):egret.Bitmap {
         var result = new egret.Bitmap();
-        var texture: egret.Texture = RES.getRes(name);
+        var texture:egret.Texture = RES.getRes(name);
         result.texture = texture;
         return result;
     }
 
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    /** 
-    private startAnimation(result: Array<any>): void {
-        var self: any = this;
-
-        var parser = new egret.HtmlTextParser();
-        var textflowArr: Array<Array<egret.ITextElement>> = [];
-        for (var i: number = 0; i < result.length; i++) {
-            textflowArr.push(parser.parser(result[i]));
-        }
-
-        var textfield = self.textfield;
-        var count = -1;
-        var change: Function = function () {
-            count++;
-            if (count >= textflowArr.length) {
-                count = 0;
-            }
-            var lineArr = textflowArr[count];
-
-            self.changeDescription(textfield, lineArr);
-
-            var tw = egret.Tween.get(textfield);
-            tw.to({ "alpha": 1 }, 200);
-            tw.wait(2000);
-            tw.to({ "alpha": 0 }, 200);
-            tw.call(change, self);
-        };
-
-        change();
+private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
+        textfield.textFlow = textFlow;
     }
-*/
-    /**
-     * 切换描述内容
-     * Switch to described content
-     */
-    /** private changeDescription(textfield: egret.TextField, textFlow: Array<egret.ITextElement>): void {
-         textfield.textFlow = textFlow;
-     }*/
 }
 
-
+class FinishWalkEvent extends egret.Event
+{
+    public static FW:string = "走完";
+//    public static isFw =false;
+    public constructor(type:string, bubbles:boolean=false, cancelable:boolean=false)
+    {
+        super(type,bubbles,cancelable);
+    }
+}
 
 
