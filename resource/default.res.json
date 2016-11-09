@@ -1,105 +1,120 @@
 {
-	"resources": [
-		{
-			"name": "BG2_png",
-			"type": "image",
-			"url": "assets/BG2.png"
-		},
-		{
-			"name": "10000_png",
-			"type": "image",
-			"url": "assets/待机/10000.png"
-		},
-		{
-			"name": "10001_png",
-			"type": "image",
-			"url": "assets/待机/10001.png"
-		},
-		{
-			"name": "10002_png",
-			"type": "image",
-			"url": "assets/待机/10002.png"
-		},
-		{
-			"name": "10003_png",
-			"type": "image",
-			"url": "assets/待机/10003.png"
-		},
-		{
-			"name": "10004_png",
-			"type": "image",
-			"url": "assets/待机/10004.png"
-		},
-		{
-			"name": "10005_png",
-			"type": "image",
-			"url": "assets/待机/10005.png"
-		},
-		{
-			"name": "10006_png",
-			"type": "image",
-			"url": "assets/待机/10006.png"
-		},
-		{
-			"name": "10007_png",
-			"type": "image",
-			"url": "assets/待机/10007.png"
-		},
-		{
-			"name": "100002_png",
-			"type": "image",
-			"url": "assets/跑步/10000.png"
-		},
-		{
-			"name": "100012_png",
-			"type": "image",
-			"url": "assets/跑步/10001.png"
-		},
-		{
-			"name": "100022_png",
-			"type": "image",
-			"url": "assets/跑步/10002.png"
-		},
-		{
-			"name": "100032_png",
-			"type": "image",
-			"url": "assets/跑步/10003.png"
-		},
-		{
-			"name": "100042_png",
-			"type": "image",
-			"url": "assets/跑步/10004.png"
-		},
-		{
-			"name": "100052_png",
-			"type": "image",
-			"url": "assets/跑步/10005.png"
-		},
-		{
-			"name": "100062_png",
-			"type": "image",
-			"url": "assets/跑步/10006.png"
-		},
-		{
-			"name": "100072_png",
-			"type": "image",
-			"url": "assets/跑步/10007.png"
-		},
-		{
-			"name": "grass_jpg",
-			"type": "image",
-			"url": "assets/grass.jpg"
-		},
-		{
-			"name": "tree_jpg",
-			"type": "image",
-			"url": "assets/tree.jpg"
-		}
-	],
 	"groups": [
 		{
-			"name": "preload",
-			"keys": "BG2_png,10000_png,10001_png,10002_png,10003_png,10004_png,10005_png,10006_png,10007_png,100002_png,100012_png,100022_png,100032_png,100042_png,100052_png,100062_png,100072_png,grass_jpg,tree_jpg"
+			"keys": "bg_jpg,egret_icon_png,description_json,grass_jpg,tree_jpg,flowers_jpg,sta1_png,sta2_png,sta3_png,sta4_png,sta5_png,sta6_png,st7_png,sta8_png,run1_png,run2_png,run3_png,run4_png,run5_png,run6_png,run7_png,run8_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "assets/grass.jpg",
+			"type": "image",
+			"name": "grass_jpg"
+		},
+		{
+			"url": "assets/tree.jpg",
+			"type": "image",
+			"name": "tree_jpg"
+		},
+		{
+			"url": "assets/flowers.jpg",
+			"type": "image",
+			"name": "flowers_jpg"
+		},
+		{
+			"url": "assets/待机/sta (1).png",
+			"type": "image",
+			"name": "sta1_png"
+		},
+		{
+			"url": "assets/待机/sta (2).png",
+			"type": "image",
+			"name": "sta2_png"
+		},
+		{
+			"url": "assets/待机/sta (3).png",
+			"type": "image",
+			"name": "sta3_png"
+		},
+		{
+			"url": "assets/待机/sta (4).png",
+			"type": "image",
+			"name": "sta4_png"
+		},
+		{
+			"url": "assets/待机/sta (5).png",
+			"type": "image",
+			"name": "sta5_png"
+		},
+		{
+			"url": "assets/待机/sta (6).png",
+			"type": "image",
+			"name": "sta6_png"
+		},
+		{
+			"url": "assets/待机/sta (7).png",
+			"type": "image",
+			"name": "st7_png"
+		},
+		{
+			"url": "assets/待机/sta (8).png",
+			"type": "image",
+			"name": "sta8_png"
+		},
+		{
+			"url": "assets/跑步/run (1).png",
+			"type": "image",
+			"name": "run1_png"
+		},
+		{
+			"url": "assets/跑步/run (2).png",
+			"type": "image",
+			"name": "run2_png"
+		},
+		{
+			"url": "assets/跑步/run (3).png",
+			"type": "image",
+			"name": "run3_png"
+		},
+		{
+			"url": "assets/跑步/run (4).png",
+			"type": "image",
+			"name": "run4_png"
+		},
+		{
+			"url": "assets/跑步/run (5).png",
+			"type": "image",
+			"name": "run5_png"
+		},
+		{
+			"url": "assets/跑步/run (6).png",
+			"type": "image",
+			"name": "run6_png"
+		},
+		{
+			"url": "assets/跑步/run (7).png",
+			"type": "image",
+			"name": "run7_png"
+		},
+		{
+			"url": "assets/跑步/run (8).png",
+			"type": "image",
+			"name": "run8_png"
 		}
 	]
 }

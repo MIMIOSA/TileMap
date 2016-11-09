@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  Copyright (c) 2014-present, Egret Technology.
 //  All rights reserved.
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -25,196 +25,20 @@
 //  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-//////////////////////////////////////////////////////////////////////////////////////、
-var Pole = (function (_super) {
-    __extends(Pole, _super);
-    function Pole() {
-        _super.call(this);
-        this.MySta = new StaMac;
-        this.MoveSpeed = 20;
-        this.ChaTime = 150;
-        this.Modle = 0;
-        this.IdleAni = new Array();
-        this.MoveAni = new Array();
-        this.MyPhoto = this.createBitmapByName("10000_png");
-        this.addChild(this.MyPhoto);
-        this.LoadAni();
-        this.anchorOffsetX = this.MyPhoto.width / 2;
-        this.anchorOffsetY = this.MyPhoto.height / 2;
-    }
-    var d = __define,c=Pole,p=c.prototype;
-    p.LoadAni = function () {
-        var texture = RES.getRes("10000_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10001_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10002_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10003_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10004_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10005_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10006_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("10007_png");
-        this.IdleAni.push(texture);
-        texture = RES.getRes("100002_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100012_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100022_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100032_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100042_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100052_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100062_png");
-        this.MoveAni.push(texture);
-        texture = RES.getRes("100072_png");
-        this.MoveAni.push(texture);
-    };
-    p.PlayAni = function (Ani) {
-        var count = 0;
-        var Bit = this.MyPhoto;
-        var M = this.Modle;
-        console.log("M:" + M);
-        var timer = new egret.Timer(125, 0);
-        timer.addEventListener(egret.TimerEvent.TIMER, Play, this);
-        timer.start();
-        function Play() {
-            Bit.texture = Ani[count];
-            if (count < Ani.length - 1) {
-                //   console.log(Ani.length+" "+count);
-                count++;
-            }
-            else {
-                count = 0;
-            }
-            if (this.Modle != M) {
-                console.log("tM:" + M + " nowM:" + this.Modle);
-                timer.stop();
-            }
-        }
-        /* 帧动画一代目
-        PlayAni1();
-        var timer:egret.Timernew egret.Timer(100, time);
-            egret.Tween.get(Bit).wait(150).call(PlayAni2);
-        }
-        function PlayAni2(){
-            Bit.texture=Ani[count];
-            if(count<Ani.length-1){console.log(Ani.length+" "+count); count++;}
-            else{count=0;}
-            PlayAni1();
-       }
-       */
-    };
-    p.Move = function (x, y) {
-        var MS = new MoveSta(x, y, this);
-        this.MySta.Reload(MS);
-    };
-    p.Idle = function () {
-        var IS = new IdleSta(this);
-        this.MySta.Reload(IS);
-    };
-    /**
-         * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-         * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-         */
-    p.createBitmapByName = function (name) {
-        var result = new egret.Bitmap();
-        var texture = RES.getRes(name);
-        result.texture = texture;
-        return result;
-    };
-    return Pole;
-}(egret.DisplayObjectContainer));
-egret.registerClass(Pole,'Pole');
-var MoveSta = (function () {
-    function MoveSta(x, y, Player) {
-        this.Ty = y;
-        this.Tx = x;
-        this.Player = Player;
-    }
-    var d = __define,c=MoveSta,p=c.prototype;
-    p.Load = function () {
-        var _this = this;
-        this.Player.Modle++;
-        var xx = this.Tx - this.Player.x;
-        var yy = this.Ty - this.Player.y;
-        if (xx > 0) {
-            this.Player.scaleX = 1;
-        }
-        else {
-            this.Player.scaleX = -1;
-        }
-        var zz = Math.pow(xx * xx + yy * yy, 0.5);
-        //   console.log(xx+" "+yy);
-        var time = zz / this.Player.MoveSpeed;
-        this.timer = new egret.Timer(50, time);
-        this.LeastTime = time;
-        //   console.log("time:"+time);
-        this.timer.addEventListener(egret.TimerEvent.TIMER, function () {
-            _this.Player.x += xx / time;
-            _this.Player.y += yy / time;
-            _this.LeastTime--;
-            if (_this.LeastTime < 1) {
-                _this.timer.stop();
-                //        this.Player.Modle=-1;
-                //         console.log("1");
-                if (_this.LeastTime > -10) {
-                    _this.Player.Idle();
-                } //意味着是走停不是逼停
-            }
-        }, this);
-        this.timer.start();
-        this.Player.PlayAni(this.Player.MoveAni);
-        //     console.log("kaishiM");
-    };
-    p.exit = function () {
-        this.LeastTime = -10;
-        //       console.log("exitM");
-    };
-    return MoveSta;
-}());
-egret.registerClass(MoveSta,'MoveSta',["Sta"]);
-var IdleSta = (function () {
-    function IdleSta(Player) {
-        this.Player = Player;
-    }
-    var d = __define,c=IdleSta,p=c.prototype;
-    p.Load = function () {
-        //      console.log("Loadidle");
-        this.Player.Modle = 0;
-        this.Player.PlayAni(this.Player.IdleAni);
-    };
-    p.exit = function () {
-        //  console.log("exitIdle");
-    };
-    return IdleSta;
-}());
-egret.registerClass(IdleSta,'IdleSta',["Sta"]);
-var StaMac = (function () {
-    function StaMac() {
-    }
-    var d = __define,c=StaMac,p=c.prototype;
-    p.Reload = function (S) {
-        if (this.nowSta) {
-            this.nowSta.exit();
-        }
-        this.nowSta = S;
-        this.nowSta.Load();
-    };
-    return StaMac;
-}());
-egret.registerClass(StaMac,'StaMac');
+//////////////////////////////////////////////////////////////////////////////////////
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
         _super.call(this);
+        this.player = new Player();
+        this.targetPos = new egret.Point();
+        this.ifSearchWay = false;
+        this.ifOnGoal = false;
+        this.ifStartMoving = false;
+        this.MoveTime = 0;
+        this.movingTime = 32;
+        this.gridSize = 64;
+        this.thePath = 0;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
     var d = __define,c=Main,p=c.prototype;
@@ -286,39 +110,44 @@ var Main = (function (_super) {
      * Create a game scene
      */
     p.createGameScene = function () {
-        var sky = this.createBitmapByName("BG2_png");
-        this.addChild(sky);
+        var _this = this;
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
-        this.Player = new Pole();
-        this.addChild(this.Player);
-        this.Player.x = this.Player.y = 300;
-        this.Player.Idle();
-        this.touchEnabled = true;
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.Moveba, this);
-        /*
-        
-                var textfield = new egret.TextField();
-                this.addChild(textfield);
-                textfield.alpha = 0;
-                textfield.width = stageW - 172;
-                textfield.textAlign = egret.HorizontalAlign.CENTER;
-                textfield.size = 24;
-                textfield.textColor = 0xffffff;
-                textfield.x = 172;
-                textfield.y = 135;
-                this.textfield = textfield;
-        
-                //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
-                // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-                RES.getResAsync("description", this.startAnimation, this)
-        */
-    };
-    p.Moveba = function (evt) {
-        this.Player.Move(evt.stageX, evt.stageY);
-        //   console.log(evt.stageX+" "+evt.stageY);
+        this.map = new TileMap();
+        this.addChild(this.map);
+        this.addChild(this.player.PlayerBitmap);
+        this.player.PlayerBitmap.x = 64; //初始位置
+        this.player.PlayerBitmap.y = 0;
+        this.map.startTile = this.map.getTile(0, 0);
+        this.map.endTile = this.map.getTile(0, 0);
+        //this.map.setEndTile(2,1);
+        this.astar = new AStar();
+        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
+        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
+        //RES.getResAsync("description_json", this.startAnimation, this)
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (e) {
+            _this.ifStartMoving = true;
+            _this.playerx = Math.floor(_this.player.PlayerBitmap.x / _this.gridSize);
+            _this.playery = Math.floor(_this.player.PlayerBitmap.y / _this.gridSize);
+            _this.playerBitX = _this.player.PlayerBitmap.x;
+            _this.playerBitY = _this.player.PlayerBitmap.y;
+            _this.map.startTile = _this.map.getTile(_this.playerx, _this.playery);
+            _this.thePath = 0;
+            _this.targetPos.x = e.stageX;
+            _this.targetPos.y = e.stageY;
+            _this.tileX = Math.floor(_this.targetPos.x / _this.gridSize);
+            _this.tileY = Math.floor(_this.targetPos.y / _this.gridSize);
+            _this.map.endTile = _this.map.getTile(_this.tileX, _this.tileY);
+            _this.ifSearchWay = _this.astar.findPath(_this.map);
+            if (_this.ifSearchWay) {
+                _this.player.SetState(new WalkingState(), _this);
+                _this.thePath = 0;
+            }
+            if (_this.ifSearchWay)
+                _this.map.startTile = _this.map.endTile;
+        }, this);
+        this.onMove();
+        this.PlayerAnimation();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -330,40 +159,117 @@ var Main = (function (_super) {
         result.texture = texture;
         return result;
     };
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    p.startAnimation = function (result) {
+    p.onMove = function () {
+        var _this = this;
         var self = this;
-        var parser = new egret.HtmlTextParser();
-        var textflowArr = [];
-        for (var i = 0; i < result.length; i++) {
-            textflowArr.push(parser.parser(result[i]));
-        }
-        var textfield = self.textfield;
-        var count = -1;
-        var change = function () {
-            count++;
-            if (count >= textflowArr.length) {
-                count = 0;
+        egret.Ticker.getInstance().register(function () {
+            if (_this.ifStartMoving && self.ifSearchWay) {
+                if (self.thePath < self.astar.pathArray.length - 1) {
+                    var distanceX = self.astar.pathArray[self.thePath + 1].x - self.astar.pathArray[self.thePath].x;
+                    var distanceY = self.astar.pathArray[self.thePath + 1].y - self.astar.pathArray[self.thePath].y;
+                    if (distanceX > 0) {
+                        self.player.SetRightOrLeftState(new GoRightState(), self);
+                    }
+                    if (distanceX <= 0) {
+                        self.player.SetRightOrLeftState(new GoLeftState(), self);
+                    }
+                    if (!self.IfOnGoal(self.astar.pathArray[self.thePath + 1])) {
+                        self.player.PlayerBitmap.x += distanceX / self.movingTime;
+                        self.player.PlayerBitmap.y += distanceY / self.movingTime;
+                    }
+                    else {
+                        self.thePath += 1;
+                    }
+                }
             }
-            var lineArr = textflowArr[count];
-            self.changeDescription(textfield, lineArr);
-            var tw = egret.Tween.get(textfield);
-            tw.to({ "alpha": 1 }, 200);
-            tw.wait(2000);
-            tw.to({ "alpha": 0 }, 200);
-            tw.call(change, self);
-        };
-        change();
+            if (_this.ifStartMoving && !self.ifSearchWay) {
+                var distanceX = self.map.startTile.x - self.playerBitX;
+                var distanceY = self.map.startTile.y - self.playerBitY;
+                if (distanceX > 0) {
+                    self.player.SetRightOrLeftState(new GoRightState(), self);
+                }
+                if (distanceX <= 0) {
+                    self.player.SetRightOrLeftState(new GoLeftState(), self);
+                }
+                if (!self.IfOnGoal(self.map.startTile)) {
+                    self.player.PlayerBitmap.x += distanceX / self.movingTime;
+                    self.player.PlayerBitmap.y += distanceY / self.movingTime;
+                }
+                else
+                    self.player.SetState(new IdleState(), self);
+            }
+        }, self);
     };
-    /**
-     * 切换描述内容
-     * Switch to described content
-     */
-    p.changeDescription = function (textfield, textFlow) {
-        textfield.textFlow = textFlow;
+    p.IfOnGoal = function (tile) {
+        var self = this;
+        if (self.player.PlayerBitmap.x == tile.x && self.player.PlayerBitmap.y == tile.y)
+            this.ifOnGoal = true;
+        else
+            this.ifOnGoal = false;
+        return this.ifOnGoal;
+    };
+    p.PlayerAnimation = function () {
+        var self = this;
+        var n = 0;
+        var goIdle = 0;
+        var goWalk = 0;
+        var frame = 0;
+        var standArr = ["sta1_png", "sta2_png", "sta3_png", "sta4_png", "sta5_png", "sta6_png", "sta7_png", "sta8_png"];
+        var walkArr = ["run1_png", "run2_png", "run3_png", "run4_png", "run5_png", "run6_png", "run7_png", "run8_png"];
+        var MoveAnimation = function () {
+            //var playerBitmap = egret.Tween.get(self.player.PlayerBitmap);
+            egret.Ticker.getInstance().register(function () {
+                if (frame % 4 == 0) {
+                    if (self.player.GetIfIdle() && !self.player.GetIfWalk()) {
+                        goIdle = 0;
+                        goWalk = 0;
+                        //var textureName = standArr[n];
+                        var texture = RES.getRes(standArr[n]);
+                        self.player.PlayerBitmap.texture = texture;
+                        n++;
+                        if (n >= standArr.length) {
+                            n = 0;
+                        }
+                    }
+                    if (self.player.GetIfWalk() && self.player.GetIfGoRight() && !self.player.GetIfIdle()) {
+                        n = 0;
+                        goIdle = 0;
+                        var textureName = walkArr[goWalk];
+                        var texture = RES.getRes(textureName);
+                        self.player.PlayerBitmap.texture = texture;
+                        self.player.PlayerBitmap.scaleX = -1;
+                        goWalk++;
+                        if (goWalk >= walkArr.length) {
+                            goWalk = 0;
+                        }
+                    }
+                    if (self.player.GetIfWalk() && self.player.GetIfGoLeft() && !self.player.GetIfIdle()) {
+                        n = 0;
+                        goWalk = 0;
+                        var textureName = walkArr[goIdle];
+                        var texture = RES.getRes(textureName);
+                        self.player.PlayerBitmap.texture = texture;
+                        //self.player.PlayerBitmap.scaleX = 1;
+                        goIdle++;
+                        if (goIdle >= walkArr.length) {
+                            goIdle = 0;
+                        }
+                    }
+                }
+                if (self.IfOnGoal(self.map.endTile)) {
+                    self.player.SetState(new IdleState(), self);
+                }
+            }, self);
+        };
+        var FramePlus = function () {
+            egret.Ticker.getInstance().register(function () {
+                frame++;
+                if (frame == 400)
+                    frame = 0;
+            }, self);
+        };
+        MoveAnimation();
+        FramePlus();
     };
     return Main;
 }(egret.DisplayObjectContainer));
